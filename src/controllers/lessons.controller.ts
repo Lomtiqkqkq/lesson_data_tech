@@ -33,7 +33,7 @@ export class LessonsController {
     if (lessons.length) {
       res.status(200).json(lessons);
     } else {
-      res.status(404).json({ message: 'Not Found' }); // здесь должны быть универсальные errorsHandler, но их нет, так как нет смысла
+      res.status(404).json({ message: 'Not Found' }); // здесь должны быть универсальные errorsHandler, но их нет, так как нет больше контроллеров
     }
   }
 }
