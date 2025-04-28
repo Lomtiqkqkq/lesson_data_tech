@@ -11,7 +11,7 @@ export class LessonsController {
     const { where, replacements, having } = filterBuilderFromSQL(filter);
     let sql = `
     SELECT
-     l.*
+     l.*,
      COUNT(ls.student_id) AS "studentsCount"
     FROM lessons AS l
     LEFT JOIN lesson_teachers lt ON lt.lesson_id = l.id
@@ -21,8 +21,8 @@ export class LessonsController {
     ${having.length ? 'HAVING ' + having.join(' AND ') : ''}
     ORDER BY l.date DESC
     `;
-    const page = filter.page ?? 1;
-    const perPage = filter.lessonsPerPage ?? 5;
+    const page = filter?.page ?? 1;
+    const perPage = filter?.lessonsPerPage ?? 5;
     const pagination = paginationFromSQL(sql, page, perPage);
     sql = pagination.sql;
     Object.assign(replacements, pagination.replacements);

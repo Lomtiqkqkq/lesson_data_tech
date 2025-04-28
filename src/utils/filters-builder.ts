@@ -5,7 +5,7 @@ export function filterBuilderFromSQL(dto: FilterDto) {
   const having: string[] = [];
   const replacements: Record<string, any> = {};
 
-  if (dto.date) {
+  if (dto?.date) {
     const splitStringDate = dto.date.split(',').map((s) => s.trim());
     if (splitStringDate.length === 1) {
       where.push(`l.date = :date`);
@@ -17,18 +17,18 @@ export function filterBuilderFromSQL(dto: FilterDto) {
     }
   }
 
-  if (dto.status) {
+  if (dto?.status) {
     where.push(`l.status = :status`);
     replacements.status = dto.status;
   }
 
-  if (dto.teacherIds) {
+  if (dto?.teacherIds) {
     const ids = dto.teacherIds.split(',').map((id) => +id.trim());
     where.push(`lt.teacher_id IN (:teacherIds)`);
     replacements.teacherIds = ids;
   }
 
-  if (dto.studentsCount) {
+  if (dto?.studentsCount) {
     const splitStudentString = dto.studentsCount
       .split(',')
       .map((s) => +s.trim());

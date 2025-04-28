@@ -1,17 +1,13 @@
-import { Sequelize } from 'sequelize-typescript';
-import * as dotenv from 'dotenv';
-import { join } from 'path';
+import { Sequelize } from 'sequelize';
+import 'dotenv/config';
 
-dotenv.config();
+const sequelize = new Sequelize(process.env.SEQUELIZE_DB_STR as string, {
+  logging:
+    process.env.NODE_ENV === 'development'
+      ? (str: string) => {
+          console.log(`[${new Date().toLocaleString()}] ${str}`);
+        }
+      : false,
+});
 
-export const sequelize = new Sequelize(
-  process.env.DATABASE_NAME,
-  process.env.DATABASE_USERNAME,
-  process.env.DATABASE_PASSWORD,
-  {
-    dialect: 'postgres',
-    models: [join(__dirname, '..', 'models')],
-    pool: { max: 20, min: 2 },
-    logging: console.log,
-  },
-);
+export default sequelize;
